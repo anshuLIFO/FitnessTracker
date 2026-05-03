@@ -20,7 +20,7 @@ function ActivityPage(){
 
     const {authState, setAuthState} = useContext(AuthContext);
 
-    const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
+    const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api';
 
     const handleError = (error) => {
         setError(error.response?.data?.error || "Failed to fetch activities");
