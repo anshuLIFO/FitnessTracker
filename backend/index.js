@@ -18,9 +18,10 @@ app.use("/activities", activityRouter);
 app.use("/progress", progressRouter);
 
 //initialily create the tables once the app in initialized
-app.listen(3001, async () => {
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, async () => {
   try {
-        console.log("Initializing database...");
+        console.log(`Initializing database and listening on port ${PORT}...`);
         const results = await sqlFileDriver(["create_tables.sql", "insert_data.sql"]);
         console.log("DB Init Results:", results);
     } catch (err) {

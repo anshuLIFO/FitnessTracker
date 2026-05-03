@@ -20,6 +20,8 @@ function ActivityPage(){
 
     const {authState, setAuthState} = useContext(AuthContext);
 
+    const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
+
     const handleError = (error) => {
         setError(error.response?.data?.error || "Failed to fetch activities");
     };
@@ -32,7 +34,7 @@ function ActivityPage(){
     const loadUserActivities = () =>{
         if (!authState.user_id) return;
 
-        axios.get(`http://localhost:3001/activities/${authState.user_id}`).then((response)=>{
+        axios.get(`${API_URL}/activities/${authState.user_id}`).then((response)=>{
             setUserActivities(response.data);
             setError();
         }).catch(err => handleError(err));
@@ -41,8 +43,8 @@ function ActivityPage(){
     const onSubmit = (data, { resetForm }) => {
         const payload = {...data, user_id: authState.user_id}
 
-        axios.post("http://localhost:3001/activities/record", payload).then(()=>{
-             axios.post("http://localhost:3001/progress/updateProgress", { user_id: authState.user_id }).then(() => {
+        axios.post(`${API_URL}/activities/record`, payload).then(()=>{
+             axios.post(`${API_URL}/progress/updateProgress`, { user_id: authState.user_id }).then(() => {
                 loadUserActivities();
                 resetForm();
                 setError();
@@ -56,9 +58,9 @@ function ActivityPage(){
     });
 
     const removeActivity = (data) => {
-        axios.delete("http://localhost:3001/activities/remove",
+        axios.delete(`${API_URL}/activities/remove`,
             {params: {user_id: authState.user_id, activity: data.activity}}).then(() =>{
-                axios.post("http://localhost:3001/progress/updateProgress", { user_id: authState.user_id });
+                axios.post(`${API_URL}/progress/updateProgress`, { user_id: authState.user_id });
                 loadUserActivities();
                 setError();
             }).catch(err => handleError(err));
@@ -67,7 +69,7 @@ function ActivityPage(){
     useEffect(() => {
         if (!authState.user_id) navigate("/");
 
-        axios.get("http://localhost:3001/activities").then((response)=>{
+        axios.get(`${API_URL}/activities`).then((response)=>{
             setActivities(response.data);
             setError();
             loadUserActivities();

@@ -52,7 +52,7 @@ function GoalsPage(){
         user_id: authState.user_id,
         goal_id: Number(selectedGoal),
       }).then(() => {
-          axios.post("http://localhost:3001/progress/updateProgress", { user_id: authState.user_id }).then(()=>{
+          axios.post(`${API_URL}/progress/updateProgress`, { user_id: authState.user_id }).then(()=>{
             axios.get(`${API_URL}/progress/${authState.user_id}`);
           });
       });
