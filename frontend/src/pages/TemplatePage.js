@@ -53,10 +53,10 @@ const [mode, setMode] = useState('login');
           navigate('/goals');
         }
       }).catch((error)=>{
-        setError(error.error);
+        setError(error.response?.data?.error || error.message || "An unexpected error occurred");
       });    
     } catch (err) {
-      setError(err.response?.data?.error || 'Account request failed.');
+      setError(err.response?.data?.error || err.message || 'Account request failed.');
     }
   };
 
