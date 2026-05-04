@@ -13,12 +13,21 @@ app.use(express.json());
 app.use(cors());
 
 app.use("/api/users", userRouter);
+app.use("/users", userRouter);
+
 app.use("/api/goals", goalRouter);
+app.use("/goals", goalRouter);
+
 app.use("/api/activities", activityRouter);
+app.use("/activities", activityRouter);
+
 app.use("/api/progress", progressRouter);
+app.use("/progress", progressRouter);
 
 // Initialize DB if not already initialized
 initDb();
 
-// Export for Vercel Serverless
-module.exports = app;
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
