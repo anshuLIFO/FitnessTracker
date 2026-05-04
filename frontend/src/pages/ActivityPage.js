@@ -74,6 +74,7 @@ function ActivityPage(){
             setError();
             loadUserActivities();
         }).catch(err => handleError(err));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [authState.user_id]);
 
     return <>

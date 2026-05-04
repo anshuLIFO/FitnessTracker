@@ -40,7 +40,7 @@ function GoalsPage(){
             setGoalTypes(res.data);
             if (res.data[0]) setSelectedGoal(String(res.data[0].id));
         }).catch((error) => {setError(error.message)})
-
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [API_URL, authState.user_id]);
 
     const addGoal = async () => {
